@@ -18,3 +18,6 @@ variable "pub_sub_2" {}
 variable "pub_sub_3" {}
 variable "vol_size" {}
 variable "az_zone" {}
+variable "eksname" {}
+variable "eksversion" {}
+variable "ekstag" {}

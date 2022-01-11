@@ -19,4 +19,7 @@ module "dev_env" {
   routetag = var.routetag
   sg-tag = var.sg-tag
   vpc-tag = var.vpc-tag
+  eksname = var.eksname
+  eksversion = var.eksversion
+  ekstag = var.ekstag
 }
