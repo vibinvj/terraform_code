@@ -7,6 +7,7 @@ resource "aws_subnet" "glb_pub_sub" {
   vpc_id     = aws_vpc.glb_vpc.id
   tags = var.pub-sub-tag
   availability_zone = "us-east-1a"
+  map_public_ip_on_launch = true
   depends_on = [aws_vpc.glb_vpc]
 }
 resource "aws_subnet" "glb_pub_sub_2" {
@@ -14,23 +15,25 @@ resource "aws_subnet" "glb_pub_sub_2" {
   vpc_id     = aws_vpc.glb_vpc.id
   tags = var.pub-sub-tag
   availability_zone = "us-east-1c"
+  map_public_ip_on_launch = true
   depends_on = [aws_vpc.glb_vpc]
 }
 resource "aws_subnet" "glb_pub_sub_3" {
   cidr_block = var.pub_sub_3
   vpc_id     = aws_vpc.glb_vpc.id
   tags = var.pub-sub-tag
+  map_public_ip_on_launch = true
   availability_zone = "us-east-1d"
   depends_on = [aws_vpc.glb_vpc]
 }
 
-resource "aws_subnet" "glb_pri_sub" {
-  cidr_block = var.pri_subnet
-  vpc_id     = aws_vpc.glb_vpc.id
-  tags = var.pri_sub_tag
-  availability_zone = "us-east-1b"
-  depends_on = [aws_vpc.glb_vpc]
-}
+#resource "aws_subnet" "glb_pri_sub" {
+#  cidr_block = var.pri_subnet
+#  vpc_id     = aws_vpc.glb_vpc.id
+#  tags = var.pri_sub_tag
+#  availability_zone = "us-east-1b"
+#  depends_on = [aws_vpc.glb_vpc]
+#}
 
 resource "aws_internet_gateway" "glb_igw" {
   vpc_id = aws_vpc.glb_vpc.id
@@ -60,27 +63,27 @@ resource "aws_route_table_association" "glb_rt-attach2" {
   subnet_id = aws_subnet.glb_pub_sub_3.id
 }
 
-resource "aws_route_table" "glb_pri_route" {
-  vpc_id = aws_vpc.glb_vpc.id
-  route {
-    cidr_block = "0.0.0.0/0"
-    gateway_id = aws_nat_gateway.glb_nat.id
-  }
-  depends_on = [aws_vpc.glb_vpc]
-}
-resource "aws_route_table_association" "glb_pri_RT_attach" {
-  route_table_id = aws_route_table.glb_pri_route.id
-  subnet_id = aws_subnet.glb_pri_sub.id
-  depends_on = [aws_route_table.glb_pri_route]
-}
-resource "aws_eip" "glb_eip" {
-  vpc = true
-}
-resource "aws_nat_gateway" "glb_nat" {
-  allocation_id = aws_eip.glb_eip.id
-  subnet_id = aws_subnet.glb_pub_sub.id
-  depends_on = [aws_vpc.glb_vpc]
-}
+#resource "aws_route_table" "glb_pri_route" {
+#  vpc_id = aws_vpc.glb_vpc.id
+#  route {
+#    cidr_block = "0.0.0.0/0"
+#    gateway_id = aws_nat_gateway.glb_nat.id
+#  }
+#  depends_on = [aws_vpc.glb_vpc]
+#}
+#resource "aws_route_table_association" "glb_pri_RT_attach" {
+#  route_table_id = aws_route_table.glb_pri_route.id
+#  subnet_id = aws_subnet.glb_pri_sub.id
+#  depends_on = [aws_route_table.glb_pri_route]
+#}
+#resource "aws_eip" "glb_eip" {
+#  vpc = true
+#}
+#resource "aws_nat_gateway" "glb_nat" {
+#  allocation_id = aws_eip.glb_eip.id
+#  subnet_id = aws_subnet.glb_pub_sub.id
+#  depends_on = [aws_vpc.glb_vpc]
+#}
 
 resource "aws_security_group" "glb_sg" {
   name = var.sgname
