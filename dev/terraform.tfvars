@@ -40,3 +40,9 @@ pub_pri_Ip = "10.0.1.10"
 pri_pri_Ip = "10.0.2.10"
 vol_size = 1
 az_zone = "us-east-1a"
+eksname = "devcluster"
+eksversion = "1.19"
+ekstag = {
+  name = "eks"
+  env = "dev"
+}

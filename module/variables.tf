@@ -107,3 +107,18 @@ variable "az_zone" {
   description = "az zone"
   type = string
 }
+variable "eksname" {
+  description = "eks name"
+  type = string
+}
+variable "eksversion" {
+  description = "version"
+  type = string
+}
+variable "ekstag" {
+  description = "tag"
+  type = object({
+    name = string
+    env = string
+  })
+}
