@@ -6,8 +6,8 @@ resource "aws_eks_cluster" "glb_eks" {
     subnet_ids = ["${aws_subnet.glb_pub_sub.id}", "${aws_subnet.glb_pub_sub_2.id}", "${aws_subnet.glb_pub_sub_3.id}"]
     endpoint_public_access = true
   }
-
   tags = var.ekstag
+  depends_on = [aws_vpc.glb_vpc]
 }
 resource "aws_eks_node_group" "glb_eks_node" {
   cluster_name  = aws_eks_cluster.glb_eks.name
@@ -20,4 +20,5 @@ resource "aws_eks_node_group" "glb_eks_node" {
     max_size     = 2
     min_size     = 1
   }
+  depends_on = [aws_eks_cluster.glb_eks]
 }
