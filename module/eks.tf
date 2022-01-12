@@ -20,5 +20,5 @@ resource "aws_eks_node_group" "glb_eks_node" {
     max_size     = 2
     min_size     = 1
   }
-  depends_on = [aws_eks_cluster.glb_eks]
+  depends_on = [aws_eks_cluster.glb_eks, aws_vpc.glb_vpc]
 }
